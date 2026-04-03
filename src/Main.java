@@ -34,9 +34,6 @@ public class Main {
 
         CSVReader.loadFromCSV(CSV_PATH, graph);
 
-
-        // ❌ Removed Graph Sample Section
-
         printDash(LINE_WIDTH);
         Dijkstra dijk = new Dijkstra(CITIES, true);
         dijk.run(graph, source);
