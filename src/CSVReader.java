@@ -1,10 +1,5 @@
 import java.io.*;
 
-/**
- * CSVReader.java
- * Reads road data from a CSV file and populates the graph adjacency matrix.
- * CSV format: source,destination,distance
- */
 public class CSVReader {
 
     /**
