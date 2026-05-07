@@ -1,6 +1,7 @@
-
 import java.io.*;
 import java.util.Scanner;
+import java.awt.Desktop;
+import java.net.URI;
 
 public class Main {
 
@@ -12,6 +13,9 @@ public class Main {
     static Scanner globalScanner = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
+
+        // Open the visual simulation in the browser
+        openVisualization();
 
         printDouble(LINE_WIDTH);
         printCentered("GPS Navigation System (Dijkstra)", LINE_WIDTH);
@@ -88,7 +92,7 @@ public class Main {
         System.out.println();
         printDash(LINE_WIDTH);
         System.out.print("  Find another path? (yes/no): ");
-        
+
         String response = "";
         if (globalScanner.hasNextLine()) {
             response = globalScanner.nextLine().trim().toLowerCase();
@@ -99,6 +103,26 @@ public class Main {
         } else {
             System.out.println("  Exiting. Goodbye!");
             globalScanner.close();
+        }
+    }
+
+    static void openVisualization() {
+        try {
+            File html = new File("visualization.html").getCanonicalFile();
+            if (!html.exists()) {
+                System.out.println("  [INFO] visualization.html not found, skipping browser launch.");
+                return;
+            }
+            URI uri = html.toURI();
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                Desktop.getDesktop().browse(uri);
+            } else {
+                // Fallback for Windows
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + html.getAbsolutePath());
+            }
+            System.out.println("  [INFO] Visualization opened: " + html.getName());
+        } catch (Exception e) {
+            System.out.println("  [INFO] Could not open browser: " + e.getMessage());
         }
     }
 
@@ -139,10 +163,8 @@ public class Main {
         try (PrintWriter pw = new PrintWriter(new FileWriter(f, true))) {
             pw.println("GPS Navigation System - Results");
             pw.println("================================");
-
             pw.printf("Source City      : %d%n", src);
             pw.printf("Destination City : %d%n", dest);
-
             if (dist >= Integer.MAX_VALUE / 2) {
                 pw.println("Result           : No path found");
             } else {
@@ -154,7 +176,6 @@ public class Main {
                 }
                 pw.println();
             }
-
             pw.println();
             pw.println("Total Cities : " + graph.getSize());
             pw.println("Total Roads  : " + graph.getEdgeCount());
