@@ -32,7 +32,7 @@ public class CSVReader {
                         graph.addEdge(src, dest, dist);
                     }
                 } catch (NumberFormatException e) {
-                    // Skip malformed rows silently
+                    
                 }
             }
         }
