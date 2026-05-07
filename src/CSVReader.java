@@ -2,11 +2,7 @@ import java.io.*;
 
 public class CSVReader {
 
-    /**
-     * Reads edges from CSV and loads them into the graph.
-     * @param filename path to the CSV file
-     * @param graph    Graph object to populate
-     */
+
     public static void loadFromCSV(String filename, Graph graph) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
