@@ -37,7 +37,9 @@ public class Graph {
         System.out.print("         ");
         for (int i = 0; i < n; i++) System.out.printf("%5d", i);
         System.out.println();
-        System.out.println("         " + "-----".repeat(n));
+        StringBuilder dashes = new StringBuilder();
+        for (int i = 0; i < n * 5; i++) dashes.append('-');
+        System.out.println("         " + dashes.toString());
 
         for (int i = 0; i < n; i++) {
             System.out.printf("%5d  | ", i);
